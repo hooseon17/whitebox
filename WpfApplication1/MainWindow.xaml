@@ -1,0 +1,189 @@
+﻿    <Window x:Class="MainProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication1"
+        xmlns:res ="clr-namspace:WpfApplication1/Resources"
+        xmlns:converters ="clr-namspace:WpfApplication1/Converters"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Normal"        
+        DataContext="local:AddCustomerViewModel"
+        WindowChrome.ResizeGripDirection="BottomRight"
+        Title="MainWindow" Height="350" Width="500">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+        
+    <Border BorderBrush="LightGray" BorderThickness="1">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Background="LightBlue" MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>                       
+                </Grid.ColumnDefinitions>
+                <TextBlock HorizontalAlignment="Center" Margin="30,0,0,0" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Text="WhiteBox Systems" />
+                <Button Grid.Column="1" Click="CloseButton_Click" Margin="5,5,5,5">
+                    <Image Height="16" Width="16" Source="Resources\close.png"/>
+                </Button>
+            </Grid>
+        </DockPanel>
+        
+        <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1">
+            <Grid Name="ButtonPanelGrid" Margin="10,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Click="AddCustomerButton_Click" Margin="5,5,5,5">
+                    <Image Height="20" Width="20" Source="Resources\addCustomer.png"/>
+                </Button>
+
+                <Button Grid.Column="1" Click="DeleteCustomerButton_Click" Margin="5,5,5,5">
+                    <Image Height="20" Width="20" Source="Resources\deleteCustomer.png"/>
+                </Button>
+
+                <Button Name="MenuButton" Grid.Column="5" Click="MenuButton_Click" Margin="5,5,5,5">
+                    <Image Height="20" Width="20" Source="Resources\menuButton.png"/>
+                      
+                    <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Customer Working Directory"  Click="ChooseDirectory_MenuItemClick"/>
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                </Button>
+
+                </Grid>
+        </Border>     
+
+
+        <!--This is the view for the add customer page-->
+        <Grid Grid.Row="2" Visibility="{Binding Path=IsAddCustomerPageOpen, Converter={StaticResource VisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Row="0" Width="Auto">
+                <Label Content="First Name:" Margin="10,0,0,0"/>
+                <TextBox HorizontalAlignment="Left" Width="230"  Margin="10,0,0,0" Text="{Binding CustomerFirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1">
+                <Label Content="Last Name:" Margin="10,0,0,0"/>
+                <TextBox Name="LastName"  HorizontalAlignment="Left" Margin="10,0,0,0" Width="230" Text="{Binding CustomerLastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2">
+                <Label Content="Email:" Margin="10,0,0,0"/>
+                <TextBox HorizontalAlignment="Left" Margin="10,0,0,0" Width="230" Text="{Binding CustomerEmailAddress, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3">
+                <Label Content="Phone:" Margin="10,0,0,0"/>
+                <TextBox HorizontalAlignment="Left" Margin="10,0,0,0" Width="230" Text="{Binding CustomerPhoneNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="4">
+                <Label Content="Purchase Total:" Margin="10,0,0,0"/>
+                <TextBox HorizontalAlignment="Left" Margin="10,0,0,0" Width="230" Text="{Binding CustomerPurchaseTotal, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="1">
+                <Label Content="Street:" Margin="10,0,0,0"/>
+                <TextBox HorizontalAlignment="Left" Margin="10,0,0,0" Width="230" Text="{Binding CustomerStreet, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <Label Content="City:" Margin="10,0,0,0"/>
+                <TextBox HorizontalAlignment="Left" Margin="10,0,0,0" Width="230" Text="{Binding CustomerCity, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="1">
+                <Label Content="State/Province:" Margin="10,0,0,0"/>
+                <TextBox HorizontalAlignment="Left" Margin="10,0,0,0" Width="230" Text="{Binding CustomerProvince, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Grid.Column="1">
+                <Label Content="Zip/Postal Code:" Margin="10,0,0,0"/>
+                <TextBox HorizontalAlignment="Left" Margin="10,0,0,0" Width="230" Text="{Binding CustomerPostalCode, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="4" Grid.Column="1">
+                <Label Content="Country:" Margin="10,0,0,0"/>
+                <TextBox HorizontalAlignment="Left" Margin="10,0,0,0" Width="230" Text="{Binding CustomerCountry, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+
+            <DockPanel Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right">
+                <Button HorizontalAlignment="Right" Click="SaveButton_Click" Width="40" Content="Save" Command="{Binding SaveCommand}" Background="LightGray" Margin="5,5,10,5"/>
+            </DockPanel>
+        </Grid>
+        
+
+        <!--This is the view for the delete customer page-->
+        <Grid Grid.Row="2" Visibility="{Binding Path=IsDeleteCustomerPageOpen, Converter={StaticResource VisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>             
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Width="Auto">
+                <Label Content="File Name:" Margin="10,0,0,0"/>
+                <TextBox HorizontalAlignment="Left" Width="200"  Margin="10,0,0,0" Text="{Binding FileToDelete, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            </StackPanel>
+
+            <DockPanel Grid.Row="2" Grid.Column="1">
+                <Button HorizontalAlignment="Right" Click="DeleteFileButton_Click" Width="40" Content="Delete" Command="{Binding SaveCommand}" Background="LightGray" Margin="5,5,5,5"/>
+            </DockPanel>
+        </Grid>
+
+        <!-- It's important that this is in the end of the XAML as it needs to be on top of everything else! -->
+            <Grid Grid.Row="2" x:Name="InputBox" Visibility="{Binding Path=IsChooseDirectoryOpen, Converter={StaticResource VisibilityConverter}}">
+                <Grid Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="2"  MinWidth="250" Background="LightBlue" BorderBrush="Black" BorderThickness="1" CornerRadius="0,55,0,55" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel>
+                            <Label Margin="5" Content="Choose Working Directory:"/>
+                            <TextBox MinWidth="150" HorizontalAlignment="Center" Text="{Binding WorkingDirectory, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" x:Name="InputTextBox"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button x:Name="YesButton" Margin="5" Content="OK" Background="{x:Null}" Click="ChangeDirectory_ButtonClick"/>
+                                <Button x:Name="NoButton" Margin="5" Content="Cancel" Background="{x:Null}" Click="CancelDirectoryChange_ButtonClick" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>               
+            </Grid>
+        
+        </Grid>
+    </Border>
+</Window>
